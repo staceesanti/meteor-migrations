@@ -22,7 +22,7 @@ json@1.0.3
 launch-screen@1.0.2
 livedata@1.0.13
 logging@1.0.7
-meteor@2.7.1
+meteor@1.10.3
 meteor-platform@1.2.2
 minifiers@1.1.5
 minimongo@1.8.0
