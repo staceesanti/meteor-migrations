@@ -108,14 +108,13 @@ function runContract(name) {
 }
 
 function runPhase(phase, name) {
-  log(phase, name, 'started');
+  log(phase, name, 'is running');
   let phaseFn = Migrations._migrations[name][phase];
 
   // run phase, dealing with/noting exceptions
   timestamp(name, phase, 'StartedAt');
   phaseFn();
   timestamp(name, phase, 'CompletedAt');
-  log(phase, name, 'finished');
 }
 
 function timestamp(name, phase, evt) {

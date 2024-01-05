@@ -17,8 +17,6 @@ Migrations.config = function (config) {
 
 /** The public API to add a migration */
 Migrations.add = function (migration) {
-  let self = this;
-
   check(migration, {
     name: String,
     required: Match.Optional(Function),
@@ -27,13 +25,13 @@ Migrations.add = function (migration) {
     contract: Match.Optional(Function)
   });
 
-  if (self._migrations[migration.name]) {
+  if (Migrations._migrations[migration.name]) {
     throw new Error('Duplicate migration: ' + migration.name);
   }
 
-  self.collection.upsert({name: migration.name}, {$set: {name: migration.name}});
+  Migrations.collection.upsert({name: migration.name}, {$set: {name: migration.name}});
 
-  self._migrations[migration.name] = {
+  Migrations._migrations[migration.name] = {
     required: migration.required,
     expand: migration.expand,
     contract: migration.contract
