@@ -1,12 +1,12 @@
 Package.describe({
   name: 'okgrow:migrations',
   summary: 'Allow zero-downtime database migrations for Meteor',
-  version: '0.1.0',
+  version: '0.2.0',
   git: 'https://github.com/okgrow/meteor-migrations'
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.0.2');
+  api.versionsFrom('1.0.1');
   api.use(['mongo', 'minimongo']);
   api.use(['underscore', 'check', 'momentjs:moment@2.10.6']);
 

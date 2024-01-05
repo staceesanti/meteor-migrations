@@ -6,6 +6,15 @@ Migrations.collection._ensureIndex({name: 1}, {unique: 1});
 Migrations._migrations = {};
 Migrations.generateServerId = null;
 
+/** The public API to configure migrations package */
+Migrations.config = function (config) {
+  check(config, {
+    generateServerId: Function
+  });
+
+  Migrations.generateServerId = config.generateServerId;
+};
+
 /** The public API to add a migration */
 Migrations.add = function (migration) {
   let self = this;
@@ -31,13 +40,4 @@ Migrations.add = function (migration) {
   };
 
   // throw new Error("TODO implement me");
-};
-
-/** The public API to configure migrations package */
-Migrations.config = function (config) {
-  check(config, {
-    generateServerId: Function
-  });
-
-  Migrations.generateServerId = config.generateServerId;
 };
