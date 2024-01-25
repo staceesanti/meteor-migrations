@@ -1,7 +1,7 @@
 Package.describe({
   name: 'okgrow:migrations',
   summary: 'Allow zero-downtime database migrations for Meteor',
-  version: '0.2.0',
+  version: '0.2.1',
   git: 'https://github.com/okgrow/meteor-migrations'
 });
 

@@ -59,7 +59,8 @@ function unexpandedMigrations() {
   let serverId = Migrations.generateServerId();
   let unexpandedMigrationsCount = Migrations.collection.update(
     {expandStartedAt: {$exists: false}, serverId: {$exists: false}},
-    {$set: {serverId: serverId}}
+    {$set: {serverId: serverId}},
+    {multi: true}
   );
 
   if (!unexpandedMigrationsCount) {
