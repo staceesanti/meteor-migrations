@@ -7,7 +7,6 @@ Migrations.getContractDelay = function () {
 };
 
 Migrations.run = function () {
-
   console.log('Beginning DB Migrations');
 
   let unexpanded = unexpandedMigrations();
@@ -47,6 +46,7 @@ Migrations._reset = function (sameProcess) {
   }
   Migrations.collection.remove({});
   Migrations._migrations = {};
+  // eslint-disable-next-line no-unused-expressions
   sameProcess || process.exit(); // it comes back, don't worry
 };
 
@@ -114,7 +114,7 @@ function runPhase(phase, name) {
 
   // run phase, dealing with/noting exceptions
   timestamp(name, phase, 'StartedAt');
-  phaseFn();
+  wrapPotentialAsyncFn(phaseFn);
   timestamp(name, phase, 'CompletedAt');
 }
 
@@ -122,4 +122,21 @@ function timestamp(name, phase, evt) {
   let modifier = {};
   modifier[phase + evt] = new Date();
   Migrations.collection.update({name: name}, {$set: modifier});
+}
+
+function wrapPotentialAsyncFn(asyncFunction, ...asyncFunctionParams) {
+  let waitForResult = function (params, callback) {
+    const fnResult = asyncFunction(...params);
+    if (fnResult && (typeof fnResult.then === 'function')) {
+      fnResult.then(() => {
+        callback(null);
+      })
+        .catch(error => {
+          callback(error);
+        });
+    } else {
+      callback(null);
+    }
+  };
+  return Meteor.wrapAsync(waitForResult)(asyncFunctionParams);
 }
